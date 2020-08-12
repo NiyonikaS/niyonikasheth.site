@@ -15,11 +15,6 @@ body{
   color: black;
   font-family: sans-serif;
 }
-.box-img{
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
-}
 .box h1{
   font-size: 40px;
   letter-spacing: 4px;
