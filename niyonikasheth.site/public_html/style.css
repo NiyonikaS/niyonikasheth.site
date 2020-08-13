@@ -7,18 +7,13 @@ body{
 }
 .box{
   background: rgba(255, 255, 255, 0.4);
-  width: 60%;
+  width: 500px;
   padding: 40px;
   text-align: center;
   margin: auto;
   margin-top: 5%;
   color: black;
   font-family: sans-serif;
-}
-.box-img{
-  border-radius: 50%;
-  width: 200px;
-  height: 200px;
 }
 .box h1{
   font-size: 40px;
