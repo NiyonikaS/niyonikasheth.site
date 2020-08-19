@@ -22,10 +22,6 @@ if (display == ""):
         # sid = sha.new(repr(time.time())).hexdigest()
         cookie["username"]=username
         print cookie.output()
-        # save username
-        # session_dir = os.environ['DOCUMENT_ROOT'] + '/tmp/.session'
-        # session = shelve.open('/var/www/niyonikasheth.site/public.html/session')
-        # session['username'] = username
         # set display
         display = username
     # empty cookie and userInput
