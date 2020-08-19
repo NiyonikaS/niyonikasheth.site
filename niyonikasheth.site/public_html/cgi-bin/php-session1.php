@@ -6,16 +6,22 @@
         <h1> PHP Session 1 </h1>
         <?php
         session_start();
-        $value = $_REQUEST['username'];
-        // store username in session
-        $_SESSION['username'] = $value;
-        // get username from session 
-        $value = $_SESSION["username"];
-        // if no username or session destroyed
-        if($_SESSION["username"] == NULL){
-            $value = "You do not have a name set!";
+        $input = $_REQUEST['username'];
+        // check session
+        $username = $_SESSION['username'];
+        // if not stored
+        if ($username == NULL){
+            // check userinput
+            if($input != NULL){
+                $username = $input;
+                $_SESSION['username'] = $input;
+            }
+            // both userinput and session empty
+            else{
+                $username = "You do not have a name set!";
+            }
         }
-        echo "<strong>Name:</strong> $value";
+        echo "<strong>Name:</strong> $username";
         ?>
         <br>
         <p><a href="../php-start-demo.html">CGI Form</a></p>

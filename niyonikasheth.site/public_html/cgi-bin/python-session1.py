@@ -5,19 +5,23 @@ import Cookie
 userInput = sys.stdin.read()
 display = ""
 username = ""
-if (len(userInput)>0):
-    userInput = userInput.split("=")
-    username = userInput[1]
-    display = username
-if (username == ""):
-    cookies = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
-    username = cookies["username"].value
-    display = username
-    if (username == ""):
+cookies = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+display = cookies["username"].value
+# if no cookie set
+if (display == ""):
+    # check if user entered name
+    if (len(userInput)>0):
+        userInput = userInput.split("=")
+        username = userInput[1]
+        # make cookie
+        cookie = Cookie.SimpleCookie()
+        cookie["username"]=username
+        print cookie.output()
+        # set display
+        display = username
+    # empty cookie and userInput
+    else:
         display = "Did not set a username"
-cookie = Cookie.SimpleCookie()
-cookie["username"]=username
-print cookie.output()
 print "Content-Type: text/html\r\n\r\n"
 print "<html>"
 print "<head>"
