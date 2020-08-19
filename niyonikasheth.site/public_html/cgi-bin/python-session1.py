@@ -1,12 +1,16 @@
 #!/usr/bin/env python
 import cgi, cgitb
 import os, sys
-import Cookie
+import sha, time, Cookie, shelve
+
 userInput = sys.stdin.read()
 display = ""
 username = ""
-cookies = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
-display = cookies["username"].value
+try:
+    cookies = Cookie.SimpleCookie(os.environ["HTTP_COOKIE"])
+    display = cookies["username"].value
+except KeyError:
+    display = ""
 # if no cookie set
 if (display == ""):
     # check if user entered name
@@ -15,8 +19,13 @@ if (display == ""):
         username = userInput[1]
         # make cookie
         cookie = Cookie.SimpleCookie()
+        # sid = sha.new(repr(time.time())).hexdigest()
         cookie["username"]=username
         print cookie.output()
+        # save username
+        # session_dir = os.environ['DOCUMENT_ROOT'] + '/tmp/.session'
+        # session = shelve.open('/var/www/niyonikasheth.site/public.html/session')
+        # session['username'] = username
         # set display
         display = username
     # empty cookie and userInput
