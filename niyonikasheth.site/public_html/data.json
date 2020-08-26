@@ -1,0 +1,134 @@
+{
+  "browsers": [
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 839,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 1
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 839,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 2
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 839,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 3
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 839,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 4
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 839,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 5
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 839,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 6
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 839,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 7
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 150,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 8
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 150,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 9
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 150,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 10
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 839,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 11
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 150,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 12
+    },
+    {
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36",
+      "innerHeight": 948,
+      "outerHeight": 1027,
+      "innerWidth": 150,
+      "outerWidth": 839,
+      "language": "en-US",
+      "cookieEnabled": true,
+      "id": 13
+    }
+  ]
+}

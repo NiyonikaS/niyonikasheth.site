@@ -62,3 +62,9 @@ ul{
   margin: 2px;
   font-weight: lighter;
 }
+zing-grid {
+  background: rgb(206, 185, 128);;
+  font-size: 1.2rem;
+  padding: 10px;
+  box-shadow: 0 0 9px rgba(0, 0, 0, .15);
+}

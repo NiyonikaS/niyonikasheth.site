@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Database table script -->
+    <script src="https://cdn.zinggrid.com/zinggrid.min.js" defer></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Database</title>
+</head>
+<body>
+    <zing-grid
+        editor context-menu
+        caption = "Initial Browser Data"
+        sort 
+        pager
+        layout = "row"
+        page-size="3"
+        viewport-stop
+    >
+    <zg-data src="https://niyonikasheth.site/api/browsers" ></zg-data>
+    </zing-grid>
+
+    <div class="row">
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "Navigation Timing"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/navtime" ></zg-data>
+            </zing-grid>
+        </div>
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "Network Information"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/networkInformation" ></zg-data>
+            </zing-grid>
+        </div>
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "FP"
+                sort 
+                pager
+                layout = "roq"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/fp" ></zg-data>
+            </zing-grid>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "FCP"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/fcp" ></zg-data>
+            </zing-grid>
+        </div> 
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "FID"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/fid" ></zg-data>
+            </zing-grid>
+        </div>
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "LCP"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/lcp" ></zg-data>
+            </zing-grid>
+        </div>
+        
+    </div>  
+    <div class="row">
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "CLS"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/cls" ></zg-data>
+            </zing-grid>
+        </div> 
+    </div>
+</body>
+</html>
