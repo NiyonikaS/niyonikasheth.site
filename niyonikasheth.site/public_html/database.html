@@ -20,7 +20,7 @@
         page-size="3"
         viewport-stop
     >
-    <zg-data src="https://niyonikasheth.site/api/browsers" ></zg-data>
+    <zg-data src="https://niyonikasheth.site/api/initialBrowserData" ></zg-data>
     </zing-grid>
 
     <div class="row">
@@ -34,7 +34,7 @@
                 page-size="3"
                 viewport-stop
             >
-            <zg-data src="https://niyonikasheth.site/api/navtime" ></zg-data>
+            <zg-data src="https://niyonikasheth.site/api/navigationTiming" ></zg-data>
             </zing-grid>
         </div>
         <div class="column">
@@ -118,6 +118,19 @@
                 viewport-stop
             >
             <zg-data src="https://niyonikasheth.site/api/cls" ></zg-data>
+            </zing-grid>
+        </div> 
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "dataConsumption"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/dataConsumption" ></zg-data>
             </zing-grid>
         </div> 
     </div>

@@ -441,72 +441,52 @@ function reportPerf(measureName, data, customProperties = {}) {
       data,
       eventProperties: customProperties || {},
       navigatorInformation: getNavigatorInfo(),
-      vitalsScore: getVitalsScore(measureName, data),
+      vitalsScore: getVitalsScore(measureName, data)
     });
     // TODO: send payload to endpoint
-    console.log(measureName);
-    console.log(data);
-    //let browserInfo = payload[2];
-    // if (measureName == "initialBrowserData"){
-    //   var url = "https://niyonikasheth.site/api/browsers";
-    //   console.log(measureName);
-    //   console.log(data);
-    //   var json = JSON.stringify(data);
-    //   var xhr = new XMLHttpRequest();
-    //   xhr.open("POST", url, true);
-    //   xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    //   xhr.onload = function(){
-    //     var users = JSON.parse(xhr.responseText);
-    //     if (xhr.readyState == 4 && xhr.staus=="201") {
-    //       console.table(users);
-    //     } else { 
-    //       console.error(users);
-    //     }
-    //   }
-    //   xhr.send(json);
-    // } 
-    // if (measureName == "navigationTiming"){
-    //     var url = "https://niyonikasheth.site/api/navtime";
-    //     var json = {
-    //       "time": data
-    //     };
-    //     json = JSON.stringify(json);
-    //     var xhr = new XMLHttpRequest();
-    //     xhr.open("POST", url, true);
-    //     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-    //     xhr.onload = function(){
-    //       var users = JSON.parse(xhr.responseText);
-    //       if (xhr.readyState == 4 && xhr.staus=="201") {
-    //         console.table(users);
-    //       } else { 
-    //         console.error(users);
-    //       }
-    //     }
-    //     xhr.send(json);
-    //   } 
-  // if (measureName == "fp" || measureName == "fcp" || measureName == "fid" || measureName == "lcp" 
-  //     || measureName == "cls" || measureName == "networkInformation"){
-  //     var url = "https://niyonikasheth.site/api/performance";
-  //     console.log(measureName);
-  //     console.log(data);
-  //     var json = {
-  //       "measureName": measureName,
-  //       "data": data
-  //     };
-  //     json = JSON.stringify(json);
-  //     var xhr = new XMLHttpRequest();
-  //     xhr.open("POST", url, true);
-  //     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
-  //     xhr.onload = function(){
-  //       var users = JSON.parse(xhr.responseText);
-  //       if (xhr.readyState == 4 && xhr.staus=="201") {
-  //         console.table(users);
-  //       } else { 
-  //         console.error(users);
-  //       }
-  //     }
-  //     xhr.send(json);
-  //   } 
+    // console.log(payload);
+    // console.log(data);
+    if (measureName == "initialBrowserData"){
+      var url = "https://niyonikasheth.site/api/browsers";
+      console.log(measureName);
+      console.log(data);
+      var json = JSON.stringify(data);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+      xhr.onload = function(){
+        var users = JSON.parse(xhr.responseText);
+        if (xhr.readyState == 4 && xhr.staus=="201") {
+          console.table(users);
+        } else { 
+          console.error(users);
+        }
+      }
+      xhr.send(json);
+    } 
+    else {
+      var url = "https://niyonikasheth.site/api/perf/"+measureName;
+      console.log(measureName);
+      console.log(data);
+      console.log(payload.vitalsScore);
+      var json = {
+        "data": data,
+        "vitalsScore": payload.vitalsScore
+      };
+      json = JSON.stringify(json);
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+      xhr.onload = function(){
+        var users = JSON.parse(xhr.responseText);
+        if (xhr.readyState == 4 && xhr.staus=="201") {
+          console.table(users);
+        } else { 
+          console.error(users);
+        }
+      }
+      xhr.send(json);
+    } 
   });
 }
 
