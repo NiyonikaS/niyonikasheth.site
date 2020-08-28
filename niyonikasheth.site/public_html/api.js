@@ -5,7 +5,7 @@ const server = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
-const fs = require('fs');
+const { rewriter } = require('json-server');
 
 server.use(cors());
 server.use(bodyParser.json());
@@ -50,31 +50,53 @@ server.get('/:measureName/:id', function(req, res) {
 /***************************** POST  ***************************/
 
 // POST browser
-server.post('/browsers', function(req, res) {
+server.post('/object/browsers', function(req, res) {
   let sql = `INSERT INTO initialBrowserData(innerHeight, innerWidth, language, 
     outerHeight, outerWidth, userAgent) VALUES (?)`;
+  let data = req.body.data;
   let values = [
-    req.body.innerHeight, 
-    req.body.innerWidth, 
-    req.body.language, 
-    req.body.outerHeight, 
-    req.body.outerWidth, 
-    req.body.userAgent
+    data.innerHeight, 
+    data.innerWidth, 
+    data.language, 
+    data.outerHeight, 
+    data.outerWidth, 
+    data.userAgent
   ];
   db.query(sql, [values], function(err, data, fields) {
     if (err) throw err;
-    res.json({})
+    res.send(JSON.stringify({"status": 200, "error": null, "response": fields}));
   })
 });
 
+// POST data consumption
+server.post('/object/dataConsumption', function(req, res) {
+  let info = req.body.data; /// fixed?
+  let sql = `INSERT INTO dataConsumption SET ?`;
+  let query = db.query(sql, info,(err, results) => {
+    if(err) throw err;
+    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+  });
+});
+
+// POST storageEstimate
+server.post('/object/storageEstimate', function(req, res) {
+  let info = {"data": JSON.stringify(req.body.data)};
+  let sql = `INSERT INTO storageEstimate SET ?`;
+  let query = db.query(sql, info,(err, results) => {
+    if(err) throw err;
+    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+  });
+});
+
 // POST measureName
-server.post('/perf/:measureName', function(req, res) {
+server.post('/:measureName', function(req, res) {
+  let data = req.body.data;
+  let vitalsScore = req.body.vitalsScore;
   let info = {};
-  //console.log("recieved: " + req.body.data);
-  if (req.body.vitalsScore == null){
-    info = {data: req.body.data};
+  if (vitalsScore == null){
+    info = {data: data};
   } else {
-    info = {data: req.body.data, vitalsScore:req.body.vitalsScore};
+    info = {data: data, vitalsScore:req.body.vitalsScore};
   }
   let sql = `INSERT INTO `+req.params.measureName+` SET ?`;
   let query = db.query(sql, info,(err, results) => {
@@ -87,25 +109,50 @@ server.post('/perf/:measureName', function(req, res) {
 /***************************** PUT  ***************************/
 
 // PUT measureName
-server.put('/perf/:measureName/:id', function(req, res) {
-  let sql = `UPDATE `+req.params.measureName+` SET data=`+req.body.data+`, vitalsScore=`+req.body.vitalsScore+
-            ` WHERE id=`+req.params.id;
-  db.query(sql, function(err, data, fields) {
-    if (err) throw err;
-    res.send(data);
-  })
+server.put('/:measureName/:id', function(req, res) {
+  let data = JSON.stringify(req.body.data);
+  console.log(data);
+  let vitalsScore = req.body.vitalsScore;
+  console.log(vitalsScore);
+  let sql = "";
+  if (vitalsScore == null){
+    sql =  `UPDATE `+req.params.measureName+` SET data='`+data+`', vitalsScore='`+vitalsScore+
+            `' WHERE id=`+req.params.id;
+  } else {
+    sql = `UPDATE `+req.params.measureName+` SET data='`+data+`' WHERE id=`+req.params.id;
+  }
+  let query = db.query(sql, (err, results) => {
+    if(err) throw err;
+    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+  });
 });
 
+
 // PUT browser entry
-server.put('/browsers/:id', function(req, res) {
-  let sql = `UPDATE initialBrowserData SET innerHeight=`+req.body.innerHeight+`, innerWidth=`+req.body.innerWidth+
-            `, outerHeight=`+req.body.outerHeight+`, outerWidth=`+req.body.outerWidth+`, language=`+req.body.language+
-            `, userAgent=`+req.body.userAgent+` WHERE id=`+req.params.id;
-  db.query(sql, function(err, data, fields) {
-    if (err) throw err;
-    res.send(data);
-  })
+server.put('/object/browsers/:id', function(req, res) {
+  let json = req.body.data;
+  let sql = `UPDATE initialBrowserData SET innerHeight='`+json.innerHeight+`', innerWidth='`+json.innerWidth+
+            `', outerHeight='`+json.outerHeight+`', outerWidth='`+json.outerWidth+`', language='`+json.language+
+            `', userAgent='`+json.userAgent+`' WHERE id=`+req.params.id;
+  let query = db.query(sql, (err, results) => {
+    if(err) throw err;
+    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+  });
 });
+
+// PUT dataConsumption entry
+server.put('/object/dataConsumption/:id', function(req, res) {
+  let json = req.body.data;
+  let sql = `UPDATE dataConsumption SET beacon='`+json.beacon+`', css='`+json.css+
+            `', fetch='`+json.fetch+`', img='`+json.img+`', other='`+json.other+
+            `', script='`+json.script+`', total='`+json.total+
+            `', xmlhttprequest='`+json.xmlhttprequest+`' WHERE id=`+req.params.id;
+  let query = db.query(sql, (err, results) => {
+    if(err) throw err;
+    res.send(JSON.stringify({"status": 200, "error": null, "response": results}));
+  });
+});
+
 
 /***************************** DELETE  ***************************/
 
@@ -118,12 +165,5 @@ server.delete('/:measureName/:id', function(req, res) {
       res.send(JSON.stringify({"status": 200, "error": null, "response": data}));
   });
 });
-
-// const router = require('./routes');
-// // use modules
-// // use router
-// server.use('/routes', router);
-
-// server.use(router);
 
 server.listen(3003, () => console.log(`Server started, listening port: 3003`));

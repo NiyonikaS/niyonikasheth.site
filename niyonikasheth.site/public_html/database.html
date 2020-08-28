@@ -8,7 +8,7 @@
     <script src="https://cdn.zinggrid.com/zinggrid.min.js" defer></script>
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="icon" type="image/png" href="favicon.png">
-    <title>Database</title>
+    <title>Database Grid</title>
 </head>
 <body>
     <zing-grid
@@ -68,14 +68,27 @@
         <div class="column">
             <zing-grid
                 editor context-menu
-                caption = "FCP"
+                caption = "LCP"
                 sort 
                 pager
                 layout = "row"
                 page-size="3"
                 viewport-stop
             >
-            <zg-data src="https://niyonikasheth.site/api/fcp" ></zg-data>
+            <zg-data src="https://niyonikasheth.site/api/lcp" ></zg-data>
+            </zing-grid>
+        </div> 
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "LCP Final"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/lcpFinal" ></zg-data>
             </zing-grid>
         </div> 
         <div class="column">
@@ -90,22 +103,10 @@
             >
             <zg-data src="https://niyonikasheth.site/api/fid" ></zg-data>
             </zing-grid>
-        </div>
-        <div class="column">
-            <zing-grid
-                editor context-menu
-                caption = "LCP"
-                sort 
-                pager
-                layout = "row"
-                page-size="3"
-                viewport-stop
-            >
-            <zg-data src="https://niyonikasheth.site/api/lcp" ></zg-data>
-            </zing-grid>
-        </div>
-        
+        </div>    
     </div>  
+
+
     <div class="row">
         <div class="column">
             <zing-grid
@@ -123,7 +124,37 @@
         <div class="column">
             <zing-grid
                 editor context-menu
-                caption = "dataConsumption"
+                caption = "CLS Final"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/clsFinal" ></zg-data>
+            </zing-grid>
+        </div> 
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "FCP"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/fcp" ></zg-data>
+            </zing-grid>
+        </div>
+        
+    </div>
+
+    <div class="row">
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "Data Consumption"
                 sort 
                 pager
                 layout = "row"
@@ -131,6 +162,21 @@
                 viewport-stop
             >
             <zg-data src="https://niyonikasheth.site/api/dataConsumption" ></zg-data>
+            </zing-grid>
+        </div> 
+    </div>
+    <div class="row">
+        <div class="column">
+            <zing-grid
+                editor context-menu
+                caption = "Storage Estimate"
+                sort 
+                pager
+                layout = "row"
+                page-size="3"
+                viewport-stop
+            >
+            <zg-data src="https://niyonikasheth.site/api/storageEstimate" ></zg-data>
             </zing-grid>
         </div> 
     </div>

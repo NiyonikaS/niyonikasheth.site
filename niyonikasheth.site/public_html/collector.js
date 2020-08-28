@@ -445,12 +445,8 @@ function reportPerf(measureName, data, customProperties = {}) {
     });
     // TODO: send payload to endpoint
     // console.log(payload);
-    // console.log(data);
     if (measureName == "initialBrowserData"){
-      var url = "https://niyonikasheth.site/api/browsers";
-      console.log(measureName);
-      console.log(data);
-      var json = JSON.stringify(data);
+      var url = "https://niyonikasheth.site/api/object/browsers";
       var xhr = new XMLHttpRequest();
       xhr.open("POST", url, true);
       xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -462,13 +458,40 @@ function reportPerf(measureName, data, customProperties = {}) {
           console.error(users);
         }
       }
-      xhr.send(json);
-    } 
+      xhr.send(JSON.stringify(payload));
+    }
+    else if (measureName == "dataConsumption"){
+      var url = "https://niyonikasheth.site/api/object/dataConsumption";
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+      xhr.onload = function(){
+        var users = JSON.parse(xhr.responseText);
+        if (xhr.readyState == 4 && xhr.staus=="201") {
+          console.table(users);
+        } else { 
+          console.error(users);
+        }
+      }
+      xhr.send(JSON.stringify(payload)); 
+    }
+    else if (measureName == "storageEstimate"){
+      var url = "https://niyonikasheth.site/api/object/storageEstimate";
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", url, true);
+      xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+      xhr.onload = function(){
+        var users = JSON.parse(xhr.responseText);
+        if (xhr.readyState == 4 && xhr.staus=="201") {
+          console.table(users);
+        } else { 
+          console.error(users);
+        }
+      }
+      xhr.send(JSON.stringify(payload)); 
+    }
     else {
-      var url = "https://niyonikasheth.site/api/perf/"+measureName;
-      console.log(measureName);
-      console.log(data);
-      console.log(payload.vitalsScore);
+      var url = "https://niyonikasheth.site/api/"+measureName;
       var json = {
         "data": data,
         "vitalsScore": payload.vitalsScore
@@ -485,7 +508,7 @@ function reportPerf(measureName, data, customProperties = {}) {
           console.error(users);
         }
       }
-      xhr.send(json);
+      xhr.send(JSON.stringify(payload));
     } 
   });
 }

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Database table script -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Data Viz</title>
+    <style>
+        body {
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+     
+        #myChart {
+          height: 75%;
+          width: 80%;
+          margin: 0 auto;
+        }
+      </style>
+</head>
+<body>
+  <!-- CHART CONTAINER -->
+  <div id="myChart"></div>
+  <br>
+  
+  <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    const fetchParams = {
+        method: "GET",
+        mode: "cors",
+        cache: "default"
+    };
+
+    const url1 = "https://niyonikasheth.site/api/fcp";
+    const url2 = "https://niyonikasheth.site/api/navigationTiming";
+    var data1 = [];
+    var data2 = [];
+    const url3 = "https://niyonikasheth.site/api/lcp";
+    const url4 = "https://niyonikasheth.site/api/cls";
+    const url5 = "https://niyonikasheth.site/api/fp";
+    var data3 = [];
+    var data4 = [];
+    var data5 = [];
+    const url6 = "https://niyonikasheth.site/api/initialBrowserData";
+    var safari = 0;
+    var chrome = 0;
+    var other = 0;
+
+    Promise.all([
+        // fetch url 1  
+        fetch(url1, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            info.forEach(function(i) {
+                data1.push([i.id, i.data]); 
+            });
+        }),
+        // fetch url 2
+        fetch(url2, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            info.forEach(function(i) {
+                data2.push([i.id, i.data]); 
+            });
+        }),
+        // fetch url 3
+        fetch(url3, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            info.forEach(function(i) {
+                data3.push([i.id, i.data]); 
+            });
+        }),
+        // fetch url 4
+        fetch(url4, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            info.forEach(function(i) {
+                data4.push([i.id, i.data]); 
+            });
+        }),
+        // fetch url 5
+        fetch(url5, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            info.forEach(function(i) {
+                data5.push([i.id, i.data]); 
+            });
+        }),
+        // fetch url 6
+        fetch(url6, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            var userAgent = "";
+            info.forEach(function(i) {
+                userAgent = i.userAgent;
+                if(userAgent.includes("Chrome")){
+                    chrome++;
+                }
+                else if(userAgent.includes("Safari")){
+                    safari++;
+                }
+                else{
+                    other++;
+                }
+            })
+        })
+    ]).then(function(){
+
+        /** BAR CHART ***/
+        let g1 = {
+            type: 'bar',
+            title: {
+                text: 'Chart 1',
+                fontSize: 24,
+            },
+            legend: {
+                draggable: true,
+            },
+            scaleX: {
+                // Set scale label
+                label: { text: 'ID' },
+                // Convert text on scale indices
+                // labels: myLabels
+            },
+            scaleY: {
+                // Scale label with unicode character
+                label: { text: 'Data' }
+            },
+            series: [
+                {
+                // Plot 1 values, linear data
+                values: data1,
+                text: 'FCP',
+                },
+                {
+                  // Plot 2 values, linear data
+                  values: data2,
+                  text: 'Navigation Timing'
+                }
+            ]
+        };
+
+        /*** LINE CHART ***/
+        let g2 = {
+            type: 'line',
+            title: {
+                text: 'Chart 2',
+                fontSize: 24,
+            },
+            legend: {
+                draggable: true,
+            },
+            scaleX: {
+                // Set scale label
+                label: { text: 'ID' },
+                // Convert text on scale indices
+                // labels: myLabels
+            },
+            scaleY: {
+                // Scale label with unicode character
+                label: { text: 'Data' }
+            },
+            series: [
+                {
+                // Plot 1 values, linear data
+                values: data3,
+                text: 'LCP',
+                },
+                {
+                  // Plot 2 values, linear data
+                  values: data4,
+                  text: 'CLS'
+                },
+                {
+                  // Plot 2 values, linear data
+                  values: data5,
+                  text: 'FP'
+                }
+            ]
+            };
+
+         /*** PIE CHART ***/
+         let g3 = {
+            type: 'pie',
+            title: {
+                text: 'Browser Usage',
+                fontSize: 24,
+            },
+            legend: {
+                draggable: true,
+            },
+            scaleX: {
+                // Set scale label
+                label: { text: 'ID' },
+                // Convert text on scale indices
+                // labels: myLabels
+            },
+            scaleY: {
+                // Scale label with unicode character
+                label: { text: 'Data' }
+            },
+            series: [
+                {
+                // Plot 1 values, linear data
+                values: [chrome],
+                text: 'Chrome',
+                },
+                {
+                  // Plot 2 values, linear data
+                  values: [safari],
+                  text: 'Safari'
+                },
+                {
+                  // Plot 2 values, linear data
+                  values: [other],
+                  text: 'Other'
+                }
+            ]
+            };
+
+        var chartJSON = {
+            //backgroundColor: bgColorMain,
+
+            graphset: [g1, g2, g3]
+        };
+
+        // Render Method[3]
+        zingchart.render({
+            id: 'myChart',
+            data: chartJSON,
+        });
+    });   
+  </script>
+
+
+</body>
+</html>
+
+
+<!-- <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    const fetchParams = {
+        method: "GET",
+        mode: "cors",
+        cache: "default"
+    };
+
+    const url = "https://niyonikasheth.site/api/lcp";
+
+    fetch(url, fetchParams)
+    .then(res => {
+        if (!res.ok) {
+        throw new Error(res.statusText);
+        }
+        return res.json();
+    })
+    .then(data => {
+        // const characters = data.results;
+        // console.log(characters);
+        // let characterData = [];
+        // characters.forEach(function(character) {
+        // characterData.push([character.name, parseInt(character.height)]);
+        // });
+        // console.log(characterData);
+        const info = data;
+        let infoList = [];
+        info.forEach(function(i) {
+            console.log(i);
+            infoList.push([i.id, i.data]);
+        });
+        console.log("all info: " + infoList);
+        const chartOneData = {
+          type: "bar",
+          title: {
+            text: "Fetch + REST API Endpoint Demo",
+            adjustLayout: true
+          },
+          tooltip: {
+            text: 'ID: %kt<br>Data: %vvcm'
+          },
+          scaleX: {
+            label: {
+              text: 'ID'
+            },
+          },
+          scaleY: {
+            label: {
+              text: 'Data'
+            }
+          },
+          series: [{
+            values: infoList
+          }],
+          plotarea: {
+            margin: 'dynamic'
+          }
+        };
+        zingchart.render({
+          id: "chart-one",
+          data: chartOneData,
+          height: "100%",
+          width: "100%"
+        });
+      })
+      .catch(err => {
+        console.log("Error Getting Data From Star Wars API");
+      });
+  </script> -->
+
+  <!-- plot: {
+    // Animation docs here:
+    // https://www.zingchart.com/docs/tutorials/styling/animation#effect
+    animation: {
+    effect: 'ANIMATION_EXPAND_BOTTOM',
+    method: 'ANIMATION_STRONG_EASE_OUT',
+    sequence: 'ANIMATION_BY_NODE',
+    speed: 275,
+    }
+}, -->

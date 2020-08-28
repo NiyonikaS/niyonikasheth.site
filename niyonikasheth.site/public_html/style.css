@@ -2,7 +2,7 @@
 body{
   margin: 0;
   padding: 0;
-  background-color: rgb(206, 185, 128);/*  /*rgb(171, 226, 226);*/ /*rgb(197, 229, 255);*/
+  background-color: rgb(206, 185, 128); /*  /*rgb(171, 226, 226);*/ /*rgb(197, 229, 255);*/
   background-size: cover;
 }
 .box{
@@ -63,8 +63,8 @@ ul{
   font-weight: lighter;
 }
 zing-grid {
-  background: rgb(206, 185, 128);;
-  font-size: 1.2rem;
+  background: rgb(255, 255, 255);;
+  font-size: 0.8rem;
   padding: 10px;
   box-shadow: 0 0 9px rgba(0, 0, 0, .15);
 }
