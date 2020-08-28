@@ -17,10 +17,6 @@ db = mysql.createConnection({
     password: 'ct9hdygjhpz0gny9',
     database: 'collectorDataAll',
     port: 25060
-    // host: 'localhost',
-    // user: 'niyonika',
-    // password: 'apachelatte2',
-    // database: 'collectorData'
 }) 
 db.connect((err) =>{
     if(err) throw err;
