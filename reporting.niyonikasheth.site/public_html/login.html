@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    @charset "UTF-8";
+    body{
+      margin: 0;
+      padding: 0;
+      background-color:  #1C232B; 
+      background-size: cover;
+    }
+    .box{
+      background:  #81c9f3c9;
+      width: 500px;
+      padding: 40px;
+      text-align: center;
+      margin: auto;
+      margin-top: 20%;
+      color: black;
+      font-family: sans-serif;
+    }
+    .box h1{
+      font-size: 40px;
+      letter-spacing: 4px;
+      font-weight: 100;
+      margin-block-end: 0.2em;
+      margin-bottom: 30px;
+    }
+    .box input{
+      margin-bottom: 10px;
+      height: 26px;
+      width: 200px;
+    }
+    .box button{
+      height: 26px;
+      width: 130px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <h1>Reporting Dashboard</h1>
+    <form action="/login" method="POST">
+      <div>
+          <label for="email"></label>
+          <input type="text" id="username" name="username" placeholder="Email or Username" required>
+      </div>
+      <div>
+          <label for="password"></label>
+          <input type="password" id="password" name="password" placeholder="Password" required>
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Database table script -->
+    <script src="https://cdn.zinggrid.com/zinggrid.min.js" defer></script>
+    <link rel="stylesheet" href="../style.css" type="text/css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>User Management</title>
+</head>
+<body>
+    <zing-grid
+        caption = "User Management"
+        sort 
+        pager
+        layout = "row"
+        page-size="10"
+        viewport-stop
+        editor-controls
+    >
+    <zg-data src="https://www.reporting.niyonikasheth.site/api/users" ></zg-data>
+    </zing-grid>
+
+    <form action="/logout" method="GET">
+      <button type="submit">Log Out</button>
+    </form>
+</body>
+</html>

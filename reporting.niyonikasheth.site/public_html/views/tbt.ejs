@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Database table script -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script src="https://cdn.zinggrid.com/zinggrid.min.js" defer></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Report - Time to Interactive</title>
+    <style>
+        @charset "UTF-8";
+        body{
+          margin: 0;
+          padding: 0;
+          background-color: #1C232B; /** rgb(26, 43, 49); rgb(206, 185, 128); rgb(197, 229, 255);*/
+          background-size: cover;
+        }
+        h1{
+          color: white;
+          font-size: 20px;
+          margin: 20px;
+        }
+        button{
+          margin-top: 20px;
+          margin-left: 20px;
+        } 
+        .zc-html,
+        .zc-body {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          height: 100%;
+          color: white;
+        }
+
+        .dashboard--container {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .row {
+          display: flex;
+          /* flex-direction: row;
+          flex-wrap: wrap; */
+        }
+        .column {
+          flex: 50%; 
+        }
+        .chart--container {
+          display: flex;
+          flex-grow: 1;
+          min-width: 400px;
+          min-height: 400px;
+          margin: 20px;
+          box-shadow: 0 0 9px rgba(0, 0, 0, .15);
+          border: 1px solid gray;
+          border-radius: 4px;
+          
+        }
+        .text--container {
+          min-width: 400px;
+          min-height: 400px;
+          margin: 20px;
+          box-shadow: 0 0 9px rgba(0, 0, 0, .15);
+          border: 1px solid gray;
+          border-radius: 4px;
+          text-align: left;
+          font-size: 10px;
+          padding-left: 20px;
+          padding-right: 20px;
+          color: white;
+          font-family: sans-serif;
+          font-weight: 10;
+        }
+        p{
+          font-size: 15px;
+          line-height: 23px;
+
+        }
+        .zc-ref {
+          display: none;
+        }
+
+      </style>
+</head>
+
+<body class="zc-body">
+  <form action="/logout" method="GET">
+    <button type="submit">Log Out</button>
+  </form>
+
+  <div class="dashboard--container">
+    <div class="row">
+      <div class="column">
+        <!-- CHART CONTAINER -->
+        <div id="chart1" class="chart--container">
+          <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+        </div>
+      </div>
+      <div class="column">
+        <div id="report" class="text--container">
+          <h2>How responsive is the website?</h2>
+          <p>The Total Blocking Time metric tells us how responsive the website is because it measures the time from when the page
+            starts loading to when the website is able to respond to user interaction (like clicking buttons and links). A long TBT means that 
+            a user has to wait for the current long process to finish running before the browser can respond to their interaction. Using this graph, 
+            we can determine that the page is fairly responsive as the TBT values are generally low. The two data 
+            tables of First Contentful Paint and Total Blocking Time show that each of these values are at a "good," acceptable level--sort by
+            decsending Id to see this. This analysis is important because it signifies that the user will not have to wait too long after the 
+            first content loads(FCP) to begin interacting with the page, leading to a smoother user experience.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <!--- TABLE CONTAINER --->
+  </div>
+  <div class="row">
+    <div class="column">
+      <zing-grid
+            editor context-menu
+            caption = "First Contentful Paint (FCP)"
+            sort 
+            pager
+            layout = "row"
+            page-size="10"
+            viewport-stop
+        >
+      <zg-data src="https://niyonikasheth.site/api/fcp" ></zg-data>
+    </div>
+    <div class="column">
+      <zing-grid
+            editor context-menu
+            caption = "Total Blocking Time (TBT)"
+            sort
+            pager
+            layout = "row"
+            page-size="10"
+            viewport-stop
+        >
+      <zg-data src="https://niyonikasheth.site/api/tbt" ></zg-data>
+      </zing-grid>
+    </div>
+  </div>
+
+
+  
+  <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    const fetchParams = {
+        method: "GET",
+        mode: "cors",
+        cache: "default"
+    };
+
+    const fcp = "https://niyonikasheth.site/api/fcp";
+    const tbt = "https://niyonikasheth.site/api/tbt";
+    var fcp_data = [];
+    var tbt_data = [];
+    var tti_data = [];
+
+
+    Promise.all([
+        // fetch url 1  
+        fetch(fcp, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            var i = 0;
+            for (i = data.length-10; i < data.length; i++){
+                fcp_data.push(data[i].data); 
+            }
+            
+        }),
+        // fetch url 2
+        fetch(tbt, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            var i = 0;
+            for (i = data.length-10; i < data.length; i++){
+              tbt_data.push(data[i].data);
+            }
+        })
+
+    ]).then(function(){
+        var i = 0;
+        for (i = 0; i < tbt_data.length; i++){
+          tti_data.push(tbt_data[i] + fcp_data[i])
+        }
+        // 
+        /** TTI ***/
+        let g1 = {
+            type: 'bar',
+            globals: {
+              fontFamily: 'Source Sans Pro',
+              fontColor: 'white'
+            },
+            backgroundColor: 'transparent',
+            title: {
+                text: 'Total Blocking Time',
+                fontSize: 24,
+                padding: '0 0 0 0px'
+            },
+            subtitle: {
+              text:  'Amount of Time the Page Was Unresponive',
+              fontSize: 18,
+              padding: '0 0 100 0px'
+            },
+            scaleX: {
+                // Set scale label
+                label: { text: 'Last 10 Entries' },
+                // Convert text on scale indices
+                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            },
+            scaleY: {
+                // Scale label with unicode character
+                label: { text: 'Data' }
+            },
+            series: [
+                {
+                  // Plot 1 values, linear data
+                  backgroundColor: '#35BCB8',
+                  lineColor: '#35BCB8',
+                  values: tbt_data,
+                },
+            ]
+          };
+
+        // TTI 
+        zingchart.render({
+          id: 'chart1',
+          data: g1,
+          height: '100%',
+          width: '100%',
+        });
+
+
+
+    });   
+  </script>
+  <br>
+
+</body>
+</html>
+

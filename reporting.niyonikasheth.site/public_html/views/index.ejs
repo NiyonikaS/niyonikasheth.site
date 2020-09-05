@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Database table script -->
+    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Reporting Dashboard</title>
+    <style>
+        @charset "UTF-8";
+        body{
+          margin: 0;
+          padding: 0;
+          background-color: #1C232B; 
+          background-size: cover;
+        }
+        h1{
+          color: white;
+          font-size: 20px;
+          margin: 20px;
+        }
+        button{
+          margin-left: 20px;
+          margin-top: 5px;
+          width: 150px;
+        } 
+        .zc-html,
+        .zc-body {
+          margin: 0;
+          padding: 0;
+          width: 100%;
+          height: 100%;
+          color: white;
+        }
+
+        .dashboard--container {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .dashboard--container .row {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+
+        .chart--container {
+          display: flex;
+          flex-grow: 1;
+          min-width: 400px;
+          min-height: 400px;
+          margin: 20px;
+          box-shadow: 0 0 9px rgba(0, 0, 0, .15);
+          border: 1px solid gray;
+          border-radius: 4px;
+        }
+
+        .zc-ref {
+          display: none;
+        }
+      </style>
+</head>
+
+<body class="zc-body">
+  <h1>Hi, <%= name %></h1>
+  <form action="/tbt" method="GET">
+    <button type="submit">Generate Report</button>
+  </form> 
+ <% if(role) { %>
+    <form action="/users" method="GET">
+      <button type="submit">User Management</button>
+    </form>
+  <% } %>
+  <form action="/logout" method="GET">
+    <button type="submit">Log Out</button>
+  </form>
+  <div class="dashboard--container">
+    <div class="row">
+      <!-- CHART CONTAINER -->
+      <div id="chart1" class="chart--container">
+        <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+      </div>
+      <!-- CHART CONTAINER -->
+      <div id="chart2" class="chart--container">
+        <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+      </div>
+    </div>
+    <div class="row">
+      <!-- CHART CONTAINER -->
+      <div id="chart3" class="chart--container">
+        <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+      </div>
+    </div>
+    <div class="row">
+      <!-- CHART CONTAINER  -->
+      <div id="chart4" class="chart--container">
+        <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    const fetchParams = {
+        method: "GET",
+        mode: "cors",
+        cache: "default"
+    };
+
+    const fcp = "https://niyonikasheth.site/api/fcp";
+    const tbt = "https://niyonikasheth.site/api/tbt";
+    var fcp_data = [];
+    var tbt_data = [];
+    var tti_data = [];
+    const initBrowser = "https://niyonikasheth.site/api/initialBrowserData";
+    var safari = 0, chrome = 0, other = 0;
+    var mobile = 0, desktop = 0;
+    const fid = "https://niyonikasheth.site/api/fid";
+    var fid_data = [];
+    const lcpFinal = "https://niyonikasheth.site/api/lcpFinal";
+    const clsFinal = "https://niyonikasheth.site/api/clsFinal";
+    var lcpGood = 0, lcpBad = 0, clsGood = 0, clsBad = 0, fcpGood = 0, fcpBad = 0;
+
+
+    Promise.all([
+        // fetch url 1  
+        fetch(fcp, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            var i = 0;
+            for (i = data.length-10; i < data.length; i++){
+                fcp_data.push(data[i].data); 
+                if(data[i].vitalsScore == 'good'){ fcpGood++; }
+                else{ fcpBad++; }
+            }
+            
+        }),
+        // fetch url 2
+        fetch(tbt, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            var i = 0;
+            for (i = data.length-10; i < data.length; i++){
+              tbt_data.push(data[i].data);
+            }
+        }),
+        // fetch initBrowser
+        fetch(initBrowser, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            var userAgent = "";
+            info.forEach(function(i) {
+                userAgent = i.userAgent;
+                if(userAgent.includes("Chrome")){
+                    chrome++;
+                }
+                else if(userAgent.includes("Safari")){
+                    safari++;
+                }
+                else{
+                    other++;
+                }
+                if(userAgent.includes("iPhone")){
+                    mobile++;
+                }
+                else{
+                    desktop++;
+                }
+            })
+        }),
+        // fetch fid 
+        fetch(fid, fetchParams)
+        .then(res => {
+            if (!res.ok) {
+            throw new Error(res.statusText);
+            }
+            return res.json();
+        })
+        .then(data => {
+            const info = data;
+            var i = 0;
+            for (i = data.length-10; i < data.length; i++){
+                fid_data.push(data[i].data); 
+            }
+        })
+
+    ]).then(function(){
+        var i = 0;
+        for (i = 0; i < tbt_data.length; i++){
+          tti_data.push(tbt_data[i] - fcp_data[i])
+        }
+
+        /** Page Responsive ***/
+        let g1 = {
+            type: 'bar',
+            // backgroundColor: '#B2D2D0',
+            globals: {
+              fontFamily: 'Source Sans Pro',
+              fontColor: 'white'
+            },
+            backgroundColor: 'transparent',
+            title: {
+                text: 'Page Responsiveness',
+                fontSize: 24,
+                padding: '0 0 0 0px'
+            },
+            legend: {
+                draggable: true,
+                backgroundColor: 'white',
+                borderWidth: 0,
+                item: {
+                  fontColor: 'gray',
+                  fontWeight: 'normal',
+                  textShadow: 'none'
+                }
+            },
+            subtitle: {
+              text: 'Time To First Contentful Paint vs. Total Blocking Time',
+              fontSize: 18,
+              // align: 'center',
+              // fontColor: '#505050',
+              padding: '0 0 100 0px'
+            },
+            scaleX: {
+                // Set scale label
+                label: { text: 'Last 10 Entries' },
+                // Convert text on scale indices
+                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            },
+            scaleY: {
+                // Scale label with unicode character
+                label: { text: 'Data' }
+            },
+            series: [
+                {
+                  // Plot 1 values, linear data
+                  backgroundColor: '#35BCB8',
+                  lineColor: '#35BCB8',
+                  values: fcp_data,
+                  text: 'FCP'
+                },
+                {
+                  // Plot 1 values, linear data
+                  backgroundColor: '#bab045',
+                  lineColor: '#bab045',
+                  values: tbt_data,
+                  text: 'TBT'
+                }
+            ]
+        };
+
+         /*** BROWSER USAGE ***/
+         let g3 = {
+            type: 'pie',
+            title: {
+                text: 'Browser Usage',
+                fontSize: 24,
+            },
+            globals: {
+              fontFamily: 'Source Sans Pro',
+              fontColor: 'white'
+            },
+            backgroundColor: 'transparent',
+            legend: {
+                draggable: true,
+                backgroundColor: 'white',
+                borderWidth: 0,
+                item: {
+                  fontColor: 'gray',
+                  fontWeight: 'normal',
+                  textShadow: 'none'
+                }
+            },
+            scaleX: {
+                label: { text: 'ID' },
+            },
+            scaleY: {
+                label: { text: 'Data' }
+            },
+            series: [
+                {
+                  // Plot 1 values, linear data
+                  backgroundColor: '#35BCB8',
+                  lineColor: '#35BCB8',
+                  values: [chrome],
+                  text: 'Chrome',
+                },
+                {
+                  // Plot 2 values, linear data
+                  backgroundColor: '#bab045',
+                  lineColor: '#bab045',
+                  values: [safari],
+                  text: 'Safari'
+                },
+                {
+                  // Plot 3 values, linear data
+                  backgroundColor: '#dba963',
+                  lineColor: '#dba963',
+                  values: [other],
+                  text: 'Other'
+                }
+            ]
+            };
+        
+          /*** DEVICE USAGE ***/
+         let g4 = {
+            type: 'pie',
+            title: {
+                text: 'Device Usage',
+                fontSize: 24,
+            },
+            globals: {
+              fontFamily: 'Source Sans Pro',
+              fontColor: 'white'
+            },
+            backgroundColor: 'transparent',
+            legend: {
+                draggable: true,
+                backgroundColor: 'white',
+                borderWidth: 0,
+                item: {
+                  fontColor: 'gray',
+                  fontWeight: 'normal',
+                  textShadow: 'none'
+                }
+            },
+            scaleX: {
+                label: { text: 'ID' },
+            },
+            scaleY: {
+                label: { text: 'Data' }
+            },
+            series: [
+                {
+                  // Plot 2 values, linear data
+                  backgroundColor: '#bab045',
+                  lineColor: '#bab045',
+                  values: [desktop],
+                  text: 'Desktop'
+                },
+                {
+                  // Plot 1 values, linear data
+                  backgroundColor: '#35BCB8',
+                  lineColor: '#35BCB8',
+                  values: [mobile],
+                  text: 'Mobile',
+                },
+                
+            ]
+            };
+          
+        /*** FID Chart ***/
+        let g5 = {
+            type: 'bar',
+            title: {
+                text: 'First Input Delay',
+                fontSize: 24,
+            },
+            globals: {
+              fontFamily: 'Source Sans Pro',
+              fontColor: 'white'
+            },
+            backgroundColor: 'transparent',
+            scaleX: {
+                // Set scale label
+                label: { text: 'Last 10 Entries' },
+                labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            },
+            scaleY: {
+                // Scale label with unicode character
+                label: { text: 'Data' }
+            },
+            series: [
+                {
+                // Plot 1 values, linear data
+                backgroundColor: '#dba963',
+                lineColor: '#dba963',
+                values: fid_data,
+                }
+            ]
+            };
+
+        // Browser Usage
+        zingchart.render({
+          id: 'chart1',
+          data: g3,
+          height: '100%',
+          width: '100%',
+        });
+        // Device Usage  
+        zingchart.render({
+          id: 'chart2',
+          data: g4,
+          height: '100%',
+          width: '100%',
+        });
+        // TBT vs FCP 
+        zingchart.render({
+          id: 'chart3',
+          data: g1,
+          height: '100%',
+          width: '100%',
+        });
+        // FID 
+        zingchart.render({
+          id: 'chart4',
+          data: g5,
+          height: '100%',
+          width: '100%',
+        });
+
+    });   
+  </script>
+  <br>
+
+</body>
+</html>
+
